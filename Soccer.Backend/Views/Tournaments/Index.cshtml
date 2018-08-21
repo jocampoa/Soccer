@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Soccer.Domain.Tournament>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Tournaments</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Logo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Order)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Logo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Order)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.TournamentId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.TournamentId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.TournamentId })
+        </td>
+    </tr>
+}
+
+</table>
