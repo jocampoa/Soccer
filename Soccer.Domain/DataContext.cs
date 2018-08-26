@@ -14,8 +14,12 @@
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
         }
 
-        public System.Data.Entity.DbSet<Soccer.Domain.League> Leagues { get; set; }
+        public DbSet<League> Leagues { get; set; }
 
-        public System.Data.Entity.DbSet<Soccer.Domain.Team> Teams { get; set; }
+        public DbSet<Team> Teams { get; set; }
+
+        public DbSet<Tournament> Tournaments { get; set; }
+
+        public DbSet<TournamentGroup> TournamentGroups { get; set; }
     }
 }

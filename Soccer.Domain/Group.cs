@@ -5,33 +5,27 @@
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    public class Tournament
+    public class Group
     {
         [Key]
-        public int TournamentId { get; set; }
+        public int GroupId { get; set; }
 
         [Required(ErrorMessage = "The field {0} is required")]
         [MaxLength(50, ErrorMessage = "The maximun length for field {0} is {1} characters")]
-        [Index("Tournament_Name_Index", IsUnique = true)]
-        [Display(Name = "Tournament")]
+        [Index("Group_Name_Index", IsUnique = true)]
+        [Display(Name = "Group")]
         public string Name { get; set; }
 
         [DataType(DataType.ImageUrl)]
         public string Logo { get; set; }
 
-        [Display(Name = "Is Active?")]
-        public bool IsActive { get; set; }
-
-        [Display(Name = "Order")]
-        public int Order
-        {
-            get; set;
-        }
+        [Display(Name = "User")]
+        public int OwnerId { get; set; }
 
         [JsonIgnore]
-        public virtual ICollection<TournamentGroup> Groups { get; set; }
+        public virtual User Owner { get; set; }
 
         [JsonIgnore]
-        public virtual ICollection<Date> Dates { get; set; }
+        public virtual ICollection<GroupUser> GroupUsers { get; set; }
     }
 }

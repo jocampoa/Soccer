@@ -194,21 +194,32 @@
     <Compile Include="Controllers\LeaguesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\TeamsController.cs" />
+    <Compile Include="Controllers\TournamentGroupsController.cs" />
     <Compile Include="Controllers\TournamentsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\FilesHelper.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\LeagueView.cs" />
     <Compile Include="Models\LocalDataContext.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\TeamView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Leagues\ligacolombiana.png" />
+    <Content Include="Content\Teams\argentina.png" />
+    <Content Include="Content\Teams\brasil.png" />
+    <Content Include="Content\Teams\colombia.png" />
+    <Content Include="Content\Teams\medellin.png" />
+    <Content Include="Content\Teams\nal.png" />
+    <Content Include="Content\Teams\uruguay.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -278,9 +289,16 @@
     <Content Include="Views\Tournaments\Details.cshtml" />
     <Content Include="Views\Tournaments\Edit.cshtml" />
     <Content Include="Views\Tournaments\Index.cshtml" />
+    <Content Include="Views\TournamentGroups\Create.cshtml" />
+    <Content Include="Views\TournamentGroups\Delete.cshtml" />
+    <Content Include="Views\TournamentGroups\Details.cshtml" />
+    <Content Include="Views\TournamentGroups\Edit.cshtml" />
+    <Content Include="Views\TournamentGroups\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Groups\" />
+    <Folder Include="Content\Tournaments\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
