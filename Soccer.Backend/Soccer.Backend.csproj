@@ -190,11 +190,10 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\GenericController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LeaguesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\TeamsController.cs" />
-    <Compile Include="Controllers\TournamentGroupsController.cs" />
     <Compile Include="Controllers\TournamentsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -207,6 +206,8 @@
     <Compile Include="Models\LocalDataContext.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\TeamView.cs" />
+    <Compile Include="Models\TournamentTeamView.cs" />
+    <Compile Include="Models\TournamentView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -230,6 +231,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\fileupload.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -240,6 +242,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\soccer.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -279,26 +282,26 @@
     <Content Include="Views\Leagues\Details.cshtml" />
     <Content Include="Views\Leagues\Edit.cshtml" />
     <Content Include="Views\Leagues\Index.cshtml" />
-    <Content Include="Views\Teams\Create.cshtml" />
-    <Content Include="Views\Teams\Delete.cshtml" />
-    <Content Include="Views\Teams\Details.cshtml" />
-    <Content Include="Views\Teams\Edit.cshtml" />
-    <Content Include="Views\Teams\Index.cshtml" />
     <Content Include="Views\Tournaments\Create.cshtml" />
     <Content Include="Views\Tournaments\Delete.cshtml" />
     <Content Include="Views\Tournaments\Details.cshtml" />
     <Content Include="Views\Tournaments\Edit.cshtml" />
     <Content Include="Views\Tournaments\Index.cshtml" />
-    <Content Include="Views\TournamentGroups\Create.cshtml" />
-    <Content Include="Views\TournamentGroups\Delete.cshtml" />
-    <Content Include="Views\TournamentGroups\Details.cshtml" />
-    <Content Include="Views\TournamentGroups\Edit.cshtml" />
-    <Content Include="Views\TournamentGroups\Index.cshtml" />
+    <Content Include="Views\Tournaments\CreateGroup.cshtml" />
+    <Content Include="Views\Tournaments\EditGroup.cshtml" />
+    <Content Include="Views\Leagues\CreateTeam.cshtml" />
+    <Content Include="Views\Leagues\EditTeam.cshtml" />
+    <Content Include="Views\Tournaments\CreateDate.cshtml" />
+    <Content Include="Views\Tournaments\EditDate.cshtml" />
+    <Content Include="Views\Tournaments\DetailsGroup.cshtml" />
+    <Content Include="Views\Tournaments\CreateTeam.cshtml" />
+    <Content Include="Views\Tournaments\EditTeam.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Groups\" />
     <Folder Include="Content\Tournaments\" />
+    <Folder Include="Views\Generic\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

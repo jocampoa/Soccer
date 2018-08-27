@@ -7,7 +7,7 @@
 <h2>Leagues</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", new { }, new { @class = "btn btn-primary" })
 </p>
 <table class="table">
     <tr>
@@ -16,6 +16,9 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Logo)
+        </th>
+        <th>
+            # Teams
         </th>
         <th></th>
     </tr>

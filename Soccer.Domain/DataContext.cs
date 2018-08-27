@@ -21,5 +21,9 @@
         public DbSet<Tournament> Tournaments { get; set; }
 
         public DbSet<TournamentGroup> TournamentGroups { get; set; }
+
+        public DbSet<Date> Dates { get; set; }
+
+        public DbSet<TournamentTeam> TournamentTeams { get; set; }
     }
 }
