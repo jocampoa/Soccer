@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Xamarin.Forms;
-
-namespace Soccer
+﻿namespace Soccer
 {
-	public partial class App : Application
+    using Soccer.Views;
+    using Xamarin.Forms;
+
+    public partial class App : Application
 	{
 		public App ()
 		{
 			InitializeComponent();
 
-			MainPage = new Soccer.MainPage();
+            this.MainPage = new NavigationPage(new LoginPage());
 		}
 
 		protected override void OnStart ()

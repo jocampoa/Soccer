@@ -13,7 +13,7 @@ using Soccer.Backend.Helpers;
 
 namespace Soccer.Backend.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class LeaguesController : Controller
     {
         private LocalDataContext db = new LocalDataContext();

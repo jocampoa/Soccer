@@ -23,25 +23,11 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Logo)
+            @if (!string.IsNullOrEmpty(Model.Logo))
+            {
+                <img src="@Url.Content(Model.Logo)" alt="Image" style="width:150px;height:150px;max-width: 100%; height: auto;" />
+            }
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IsActive)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IsActive)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Order)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Order)
-        </dd>
-
     </dl>
 </div>
 <p>

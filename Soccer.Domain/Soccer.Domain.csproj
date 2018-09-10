@@ -53,9 +53,11 @@
     <Compile Include="DataContext.cs" />
     <Compile Include="Date.cs" />
     <Compile Include="Group.cs" />
+    <Compile Include="GroupsMap.cs" />
     <Compile Include="GroupUser.cs" />
     <Compile Include="League.cs" />
     <Compile Include="Match.cs" />
+    <Compile Include="MatchesMap.cs" />
     <Compile Include="Prediction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Status.cs" />
@@ -64,6 +66,7 @@
     <Compile Include="TournamentGroup.cs" />
     <Compile Include="TournamentTeam.cs" />
     <Compile Include="User.cs" />
+    <Compile Include="UsersMap.cs" />
     <Compile Include="UserType.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Soccer.ViewModels
 {
-    class LoginViewModel
+    public class LoginViewModel
     {
     }
 }

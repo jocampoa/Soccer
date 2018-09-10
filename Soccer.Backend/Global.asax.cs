@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Soccer.Backend.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -16,10 +17,18 @@ namespace Soccer.Backend
             Database.SetInitializer(
                 new MigrateDatabaseToLatestVersion<Models.LocalDataContext,
                 Migrations.Configuration>());
+            CheckRolesAndSuperUser();
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+        }
+
+        private void CheckRolesAndSuperUser()
+        {
+            UsersHelper.CheckRole("Admin");
+            UsersHelper.CheckRole("User");
+            UsersHelper.CheckSuperUser();
         }
     }
 }
