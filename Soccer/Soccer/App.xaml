@@ -17,5 +17,9 @@
         <Color x:Key="AccentColor2">#A68863</Color>
         <Color x:Key="BackgroundColor">#C1CED9</Color>
 
+        <!-- Parameters -->
+        <x:String x:Key="UrlAPI">http://soccerapi.azurewebsites.net</x:String>
+        <x:String x:Key="URLBackend">http://soccerbackend.azurewebsites.net</x:String>
+
     </Application.Resources>
 </Application>

@@ -41,5 +41,7 @@
         public DbSet<Group> Groups { get; set; }
 
         public DbSet<GroupUser> GroupUsers { get; set; }
+
+        public DbSet<Prediction> Predictions { get; set; }
     }
 }

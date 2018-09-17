@@ -1,6 +1,7 @@
 ﻿namespace Soccer.Services
 {
     using Newtonsoft.Json;
+    using Plugin.Connectivity;
     using Soccer.Models;
     using System;
     using System.Collections.Generic;
@@ -11,8 +12,38 @@
 
     public class ApiService
     {
+        public async Task<Response> CheckConnection()
+        {
+            if (!CrossConnectivity.Current.IsConnected)
+            {
+                return new Response
+                {
+                    IsSuccess = false,
+                    Message = "Check you internet connection.",
+                    //Message = Languages.TurnOnInternet,
+
+                };
+            }
+
+            var isReachable = await CrossConnectivity.Current.IsRemoteReachable("google.com");
+            if (!isReachable)
+            {
+                return new Response
+                {
+                    IsSuccess = false,
+                    Message = "Check you internet connection",
+                    //Message = Languages.NoInternet,
+                };
+            }
+
+            return new Response
+            {
+                IsSuccess = true,
+            };
+        }
+
         public async Task<Response> PasswordRecovery(string urlBase, string servicePrefix,
-    string controller, string email)
+            string controller, string email)
         {
             try
             {

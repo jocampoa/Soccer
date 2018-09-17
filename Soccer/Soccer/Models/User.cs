@@ -1,12 +1,12 @@
 ﻿namespace Soccer.Models
 {
-    //using SQLite.Net.Attributes;
-    //using SQLiteNetExtensions.Attributes;
+    using SQLite.Net.Attributes;
+    using SQLiteNetExtensions.Attributes;
     using System;
 
     public class User
     {
-        //[PrimaryKey]
+        [PrimaryKey]
         public int UserId { get; set; }
 
         public string FirstName { get; set; }
@@ -25,10 +25,10 @@
 
         public int Points { get; set; }
 
-        //[ManyToOne]
+        [ManyToOne]
         public UserType UserType { get; set; }
 
-        //[ManyToOne]
+        [ManyToOne]
         public Team FavoriteTeam { get; set; }
 
         public string AccessToken { get; set; }

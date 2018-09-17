@@ -1,12 +1,12 @@
 ﻿namespace Soccer.Models
 {
-    //using SQLite.Net.Attributes;
-    //using SQLiteNetExtensions.Attributes;
+    using SQLite.Net.Attributes;
+    using SQLiteNetExtensions.Attributes;
     using System.Collections.Generic;
 
     public class Team
     {
-        //[PrimaryKey]
+        [PrimaryKey]
         public int TeamId { get; set; }
 
         public string Name { get; set; }
@@ -17,7 +17,7 @@
 
         public int LeagueId { get; set; }
 
-        //[OneToMany(CascadeOperations = CascadeOperation.CascadeRead)]
+        [OneToMany(CascadeOperations = CascadeOperation.CascadeRead)]
         public List<User> Fans { get; set; }
 
         public string FullLogo
