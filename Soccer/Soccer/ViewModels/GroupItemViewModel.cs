@@ -15,7 +15,13 @@
             dataService = new DataService();
         }
 
-        public ICommand SelectGroupCommand { get { return new RelayCommand(SelectGroup); } }
+        public ICommand SelectGroupCommand
+        {
+            get
+            {
+                return new RelayCommand(SelectGroup);
+            }
+        }
 
         private async void SelectGroup()
         {

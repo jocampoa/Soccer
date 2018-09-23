@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Soccer.Views.PredictionPage"
              BackgroundColor="{StaticResource AccentColor1}"
-    Title="Edit Prediction"
+    Title="Prediction"
     BindingContext="{Binding Main, Source={StaticResource Locator}}">
     <StackLayout
         BindingContext="{Binding Prediction}"

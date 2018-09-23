@@ -1,11 +1,16 @@
 ﻿namespace Soccer.ViewModels
 {
+    using GalaSoft.MvvmLight.Command;
     using Soccer.Models;
     using System.Collections.ObjectModel;
+    using System.Windows.Input;
+    using Soccer.Services;
 
     public class MainViewModel : BaseViewModel
     {
         #region Attibrutes
+        private ApiService apiService;
+        private DataService dataService;
         private User currentUser;
         #endregion
 
@@ -41,6 +46,8 @@
         public RegisterViewModel Register { get; set; }
 
         public ForgotPasswordViewModel ForgotPassword { get; set; }
+
+        public ChangePasswordViewModel ChangePassword { get; set; }
         #endregion
 
         #region Constructor
@@ -80,28 +87,28 @@
             Menu.Add(new MenuItemViewModel
             {
                 Icon = "predictions.png",
-                PageName = "SelectTournamentPage",
+                PageName = "TournamentPage",
                 Title = "Predictions",
             });
 
             Menu.Add(new MenuItemViewModel
             {
                 Icon = "groups.png",
-                PageName = "SelectUserGroupPage",
+                PageName = "UserGroupPage",
                 Title = "Groups",
             });
 
             Menu.Add(new MenuItemViewModel
             {
                 Icon = "tournaments.png",
-                PageName = "SelectTournamentPage",
+                PageName = "TournamentPage",
                 Title = "Tournaments",
             });
 
             Menu.Add(new MenuItemViewModel
             {
                 Icon = "myresults.png",
-                PageName = "SelectTournamentPage",
+                PageName = "TournamentPage",
                 Title = "My Results",
             });
 
@@ -118,6 +125,43 @@
                 PageName = "LoginPage",
                 Title = "Logut",
             });
+        }
+        #endregion
+
+        #region Commands
+        public ICommand RefreshPointsCommand
+        {
+            get
+            {
+                return new RelayCommand(RefreshPoints);
+            }
+        }
+
+        private async void RefreshPoints()
+        {
+            var connection = await this.apiService.CheckConnection();
+            if (!connection.IsSuccess)
+            {              
+                return;
+            }
+
+            var parameters = dataService.First<Parameter>(false);
+            var user = dataService.First<User>(false);
+            var response = await apiService.GetPoints(
+                parameters.UrlAPI, "/api", "/Users/GetPoints",
+                user.TokenType, user.AccessToken, user.UserId);
+
+            if (!response.IsSuccess)
+            {
+                return; // Do nichim
+            }
+
+            var point = (Models.Point)response.Result;
+            if (CurrentUser.Points != point.Points)
+            {
+                CurrentUser.Points = point.Points;
+                dataService.Update(CurrentUser);
+            }
         }
         #endregion
     }

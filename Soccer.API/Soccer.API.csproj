@@ -232,6 +232,7 @@
     <Compile Include="Controllers\LeaguesController.cs" />
     <Compile Include="Controllers\PredictionsController.cs" />
     <Compile Include="Controllers\TournamentsController.cs" />
+    <Compile Include="Controllers\TournamentTeamsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">

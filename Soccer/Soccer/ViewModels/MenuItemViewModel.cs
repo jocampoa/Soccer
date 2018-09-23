@@ -6,6 +6,7 @@
     using Xamarin.Forms;
     using Helpers;
     using Soccer.Services;
+    using Soccer.Models;
 
     public class MenuItemViewModel
     {
@@ -51,20 +52,23 @@
 
             else if (this.PageName == "TournamentPage")
             {
+                var parameters = dataService.First<Parameter>(false);
+                parameters.Option = Title;
+                dataService.Update(parameters);
                 MainViewModel.GetInstance().Tournament = new TournamentViewModel();
                 App.Navigator.PushAsync(new TournamentPage());
             }
 
             else if (this.PageName == "ConfigPage")
             {
-                MainViewModel.GetInstance().Config = new ConfigViewModel();
+                MainViewModel.GetInstance().Config = new ConfigViewModel(mainViewModel.CurrentUser);
                 App.Navigator.PushAsync(new ConfigPage());
             }
 
             
             else if (this.PageName == "UserGroupPage")
             {
-                MainViewModel.GetInstance().UserGroup = new UsersGroupViewModel();
+                MainViewModel.GetInstance().UserGroup = new UserGroupViewModel();
                 App.Navigator.PushAsync(new UserGroupPage());
             }
         }

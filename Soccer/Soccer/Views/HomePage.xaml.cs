@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Soccer.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,12 @@ namespace Soccer.Views
 		public HomePage ()
 		{
 			InitializeComponent ();
-		}
+
+            var vm = MainViewModel.GetInstance();
+            base.Appearing += (object sender, EventArgs e) =>
+            {
+                vm.RefreshPointsCommand.Execute(this);
+            };
+        }
 	}
 }

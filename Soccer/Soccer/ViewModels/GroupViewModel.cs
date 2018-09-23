@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
-
     using Soccer.Models;
 
     public class GroupViewModel : BaseViewModel
