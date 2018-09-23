@@ -11,6 +11,11 @@
     {
         private DataService dataService;
 
+        public TournamentItemViewModel()
+        {
+            dataService = new DataService();
+        }
+
         public ICommand SelectTournamentCommand
         {
             get
@@ -21,18 +26,18 @@
 
         private async void SelectTournament()
         {
-            //var mainViewModel = MainViewModel.GetInstance();
-            //var parameters = dataService.First<Parameter>(false);
-            //if (parameters.Option == "Predictions")
-            //{
-            //    mainViewModel.Match = new MatchViewModel(TournamentId);
-            //    Application.Current.MainPage = new MatchPage();
-            //}
-            //else
-            //{
-            //    mainViewModel.Group = new GroupViewModel(Groups);
-            //    Application.Current.MainPage = new GroupPage();
-            //}
+            var mainViewModel = MainViewModel.GetInstance();
+            var parameters = dataService.First<Parameter>(false);
+            if (parameters.Option == "Predictions")
+            {
+                mainViewModel.Match = new MatchViewModel(TournamentId);
+                await App.Navigator.PushAsync(new MatchPage());
+            }
+            else
+            {
+                mainViewModel.Group = new GroupViewModel(Groups);
+                await App.Navigator.PushAsync(new GroupPage());
+            }
         }
     }
 }

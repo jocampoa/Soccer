@@ -40,10 +40,10 @@
         private void Navigate()
         {
             App.Master.IsPresented = false;
+            var mainViewModel = MainViewModel.GetInstance();
 
             if (this.PageName == "LoginPage")
-            {
-                var mainViewModel = MainViewModel.GetInstance();
+            {               
                 mainViewModel.CurrentUser.IsRemembered = false;
                 dataService.Update(mainViewModel.CurrentUser);
                 Application.Current.MainPage = new NavigationPage(new LoginPage());
@@ -52,13 +52,8 @@
             else if (this.PageName == "TournamentPage")
             {
                 MainViewModel.GetInstance().Tournament = new TournamentViewModel();
-                App.Navigator.PushAsync(new ConfigPage());
+                App.Navigator.PushAsync(new TournamentPage());
             }
-
-
-
-
-
 
             else if (this.PageName == "ConfigPage")
             {
@@ -66,10 +61,11 @@
                 App.Navigator.PushAsync(new ConfigPage());
             }
 
-            else if (this.PageName == "ConfigPage")
+            
+            else if (this.PageName == "UserGroupPage")
             {
-                MainViewModel.GetInstance().Config = new ConfigViewModel();
-                App.Navigator.PushAsync(new ConfigPage());
+                MainViewModel.GetInstance().UserGroup = new UsersGroupViewModel();
+                App.Navigator.PushAsync(new UserGroupPage());
             }
         }
         #endregion

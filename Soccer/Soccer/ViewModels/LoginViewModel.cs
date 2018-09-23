@@ -55,6 +55,50 @@
         #endregion
 
         #region Commands
+        public ICommand ForgotPasswordCommand
+        {
+            get
+            {
+                return new RelayCommand(ForgotPassword);
+            }
+        }
+
+        private async void ForgotPassword()
+        {
+            MainViewModel.GetInstance().ForgotPassword = new ForgotPasswordViewModel();
+            await Application.Current.MainPage.Navigation.PushAsync(new ForgotPasswordPage());
+
+        }
+
+        public ICommand LoginFacebookComand
+        {
+            get
+            {
+                return new RelayCommand(LoginFacebook);
+            }
+        }
+
+        private async void LoginFacebook()
+        {
+            await Application.Current.MainPage.Navigation.PushAsync(
+                new LoginFacebookPage());
+        }
+
+        public ICommand RegisterCommand
+        {
+            get
+            {
+                return new RelayCommand(Register);
+            }
+        }
+
+        private async void Register()
+        {
+            MainViewModel.GetInstance().Register = new RegisterViewModel();
+            await Application.Current.MainPage.Navigation.PushAsync(new RegisterPage());
+        }
+
+
         public ICommand LoginCommand
         {
             get

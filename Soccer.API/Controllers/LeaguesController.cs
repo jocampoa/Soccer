@@ -6,8 +6,10 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using Soccer.API.Models;
 using Soccer.Domain;
 
 namespace Soccer.API.Controllers
@@ -18,9 +20,22 @@ namespace Soccer.API.Controllers
         private DataContext db = new DataContext();
 
         // GET: api/Leagues
-        public IQueryable<League> GetLeagues()
+        public async Task<IHttpActionResult> GetLeagues()
         {
-            return db.Leagues;
+            var leagues = await db.Leagues.ToArrayAsync();
+            var list = new List<LeagueResponse>();
+            foreach (var league in leagues)
+            {
+                list.Add(new LeagueResponse
+                {
+                    LeagueId = league.LeagueId,
+                    Logo = league.Logo,
+                    Name = league.Name,
+                    Teams = league.Teams.ToList(),
+                });
+            }
+
+            return Ok(list);
         }
 
         // GET: api/Leagues/5

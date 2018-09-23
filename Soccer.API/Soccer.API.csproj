@@ -230,12 +230,15 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LeaguesController.cs" />
+    <Compile Include="Controllers\PredictionsController.cs" />
     <Compile Include="Controllers\TournamentsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\FilesHelper.cs" />
+    <Compile Include="Helpers\MailHelper.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ChangePasswordRequest.cs" />
@@ -260,6 +263,11 @@
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Users\Angelina.jpg" />
+    <Content Include="Content\Users\Brad.jpg" />
+    <Content Include="Content\Users\Celia.jpg" />
+    <Content Include="Content\Users\Lavoe.jpg" />
+    <Content Include="Content\Users\Mercury.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

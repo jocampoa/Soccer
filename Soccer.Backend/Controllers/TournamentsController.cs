@@ -18,6 +18,222 @@ namespace Soccer.Backend.Controllers
     {
         private LocalDataContext db = new LocalDataContext();
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> CloseMatch(Match match)
+        {
+            using (var transacction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    // Update match
+                    var oldMatch = await db.Matches.FindAsync(match.MatchId);
+                    oldMatch.LocalGoals = match.LocalGoals;
+                    oldMatch.VisitorGoals = match.VisitorGoals;
+                    oldMatch.StatusId = 3; // Closed
+                    db.Entry(oldMatch).State = EntityState.Modified;
+
+                    var statusMatch = GetStatus(match.LocalGoals.Value, match.VisitorGoals.Value);
+
+                    // Update tournaments statistics
+                    var local = await db.TournamentTeams
+                        .Where(tt => tt.TournamentGroupId == oldMatch.TournamentGroupId &&
+                                        tt.TeamId == oldMatch.LocalId)
+                        .FirstOrDefaultAsync();
+
+                    var visitor = await db.TournamentTeams
+                        .Where(tt => tt.TournamentGroupId == oldMatch.TournamentGroupId &&
+                                        tt.TeamId == oldMatch.VisitorId)
+                        .FirstOrDefaultAsync();
+
+                    local.MatchesPlayed++;
+                    local.FavorGoals += oldMatch.LocalGoals.Value;
+                    local.AgainstGoals += oldMatch.VisitorGoals.Value;
+
+                    visitor.MatchesPlayed++;
+                    visitor.FavorGoals += oldMatch.VisitorGoals.Value;
+                    visitor.AgainstGoals += oldMatch.LocalGoals.Value;
+
+                    if (statusMatch == 1) // Local won
+                    {
+                        local.MatchesWon++;
+                        local.Points += 3;
+                        visitor.MatchesLost++;
+                    }
+                    else if (statusMatch == 2) // Visitor won
+                    {
+                        visitor.MatchesWon++;
+                        visitor.Points += 3;
+                        local.MatchesLost++;
+                    }
+                    else // Draw
+                    {
+                        local.MatchesTied++;
+                        visitor.MatchesTied++;
+                        local.Points++;
+                        visitor.Points++;
+                    }
+
+                    db.Entry(local).State = EntityState.Modified;
+                    db.Entry(visitor).State = EntityState.Modified;
+                    await db.SaveChangesAsync();
+
+                    // Update positions
+                    var teams = await db.TournamentTeams
+                        .Where(tt => tt.TournamentGroupId == oldMatch.TournamentGroupId)
+                        .ToListAsync();
+                    var i = 1;
+                    foreach (var team in teams.OrderByDescending(t => t.Points)
+                                                .ThenByDescending(t => t.FavorGoals - t.AgainstGoals)
+                                                .ThenByDescending(t => t.FavorGoals))
+                    {
+                        team.Position = i;
+                        db.Entry(team).State = EntityState.Modified;
+                        i++;
+                    }
+
+                    var noPoints = new List<string>();
+                    var onePoint = new List<string>();
+                    var threePoints = new List<string>();
+
+                    // Update predictions
+                    var predictions = await db.Predictions
+                        .Where(p => p.MatchId == oldMatch.MatchId)
+                        .ToListAsync();
+                    foreach (var prediction in predictions)
+                    {
+                        var points = 0;
+                        if (prediction.LocalGoals == oldMatch.LocalGoals &&
+                            prediction.VisitorGoals == oldMatch.VisitorGoals)
+                        {
+                            points = 3;
+                            threePoints.Add(string.Format("userId:{0}", prediction.UserId));
+                        }
+                        else
+                        {
+                            var statusPrediction = GetStatus(prediction.LocalGoals, prediction.VisitorGoals);
+                            if (statusMatch == statusPrediction)
+                            {
+                                points = 1;
+                                onePoint.Add(string.Format("userId:{0}", prediction.UserId));
+                            }
+                            else
+                            {
+                                noPoints.Add(string.Format("userId:{0}", prediction.UserId));
+                            }
+                        }
+
+                        if (points != 0)
+                        {
+                            prediction.Points = points;
+                            db.Entry(prediction).State = EntityState.Modified;
+
+                            // Update user
+                            var user = await db.Users.FindAsync(prediction.UserId);
+                            user.Points += points;
+                            db.Entry(user).State = EntityState.Modified;
+
+                            // Update points in groups
+                            var groupUsers = await db.GroupUsers.Where(gu => gu.UserId == user.UserId &&
+                                                                    gu.IsAccepted &&
+                                                                    !gu.IsBlocked)
+                                                                    .ToListAsync();
+                            foreach (var groupUser in groupUsers)
+                            {
+                                groupUser.Points += points;
+                                db.Entry(groupUser).State = EntityState.Modified;
+                            }
+                        }
+                    }
+
+                    await db.SaveChangesAsync();
+                    transacction.Commit();
+
+                    if (noPoints.Count > 0)
+                    {
+                        //await SendNotificationNoPoints(noPoints, oldMatch);
+                    }
+
+                    if (onePoint.Count > 0)
+                    {
+                        //await SendNotificationOnePoint(onePoint, oldMatch);
+                    }
+
+                    if (threePoints.Count > 0)
+                    {
+                        //await SendNotificationThreePoints(threePoints, oldMatch);
+                    }
+
+                    return RedirectToAction(string.Format("DetailsDate/{0}", oldMatch.DateId));
+                }
+                catch (Exception ex)
+                {
+                    transacction.Rollback();
+                    ModelState.AddModelError(string.Empty, ex.Message);
+                    return View(match);
+                }
+            }
+        }
+
+        private int GetStatus(int localGoals, int visitorGoals)
+        {
+            if (localGoals > visitorGoals)
+            {
+                return 1; // Local win
+            }
+
+            if (visitorGoals > localGoals)
+            {
+                return 2; // Visitor win
+            }
+
+            return 3; // Draw
+        }
+
+        //private async Task SendNotificationNoPoints(List<string> tags, Match match)
+        //{
+        //    var message = string.Format("{0} {1} Vs. {2} {3}, Has finished... sorry you don't gain any point.",
+        //        match.Local.Initials, match.LocalGoals, match.VisitorGoals, match.Visitor.Initials);
+        //    await SendNotification(tags, message);
+        //}
+
+        //private async Task SendNotificationOnePoint(List<string> tags, Match match)
+        //{
+        //    var message = string.Format("{0} {1} Vs. {2} {3}, Has finished and you have gotten 1 point, congratulations!.",
+        //        match.Local.Initials, match.LocalGoals, match.VisitorGoals, match.Visitor.Initials);
+        //    await SendNotification(tags, message);
+        //}
+
+        //private async Task SendNotificationThreePoints(List<string> tags, Match match)
+        //{
+        //    var message = string.Format("{0} {1} Vs. {2} {3}, Has finished and you have gotten 3 points, congratulations!.",
+        //        match.Local.Initials, match.LocalGoals, match.VisitorGoals, match.Visitor.Initials);
+        //    await SendNotification(tags, message);
+        //}
+
+        public async Task<ActionResult> CloseMatch(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var match = await db.Matches.FindAsync(id);
+
+            if (match == null)
+            {
+                return HttpNotFound();
+            }
+
+            if (match.StatusId == 3)
+            {
+                return RedirectToAction(string.Format("DetailsDate/{0}", match.DateId));
+            }
+
+            return View(match);
+        }
+
         public async Task<ActionResult> CreateMatch(int? id)
         {
             if (id == null)

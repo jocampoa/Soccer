@@ -30,6 +30,17 @@
 
         public GroupViewModel Group { get; set; }
 
+        public UsersGroupViewModel UserGroup { get; set; }
+
+        public PredictionViewModel Prediction { get; set; }
+
+        public PositionsViewModel Positions { get; set; }
+
+        public MyResultsViewModel MyResults { get; set; }
+
+        public RegisterViewModel Register { get; set; }
+
+        public ForgotPasswordViewModel ForgotPassword { get; set; }
         #endregion
 
         #region Constructor

@@ -1,16 +1,27 @@
 ﻿namespace Soccer.ViewModels
 {
-    using Services;
+    using GalaSoft.MvvmLight.Command;
+    using Plugin.Connectivity;
+    using Soccer.Models;
+    using Soccer.Services;
+    using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.ComponentModel;
+    using System.Windows.Input;
+
     public class TournamentViewModel : BaseViewModel
     {
         #region Services
         private ApiService apiService;
         private DataService dataService;
+        private DialogService dialogService;
         #endregion
 
         #region Attributes
         private bool isRefreshing;
+        private bool isRunning;
+        private bool isEnabled;
+
         #endregion
 
         #region Properties
@@ -21,6 +32,18 @@
             get { return this.isRefreshing; }
             set { SetValue(ref this.isRefreshing, value); }
         }
+
+        public bool IsRunning
+        {
+            get { return this.isRunning; }
+            set { this.SetValue(ref this.isRunning, value); }
+        }
+
+        public bool IsEnabled
+        {
+            get { return this.isEnabled; }
+            set { this.SetValue(ref this.isEnabled, value); }
+        }
         #endregion
 
         #region Constructor
@@ -28,6 +51,7 @@
         {
             apiService = new ApiService();
             dataService = new DataService();
+            dialogService = new DialogService();
             Tournaments = new ObservableCollection<TournamentItemViewModel>();
             LoadTournaments();
         }
@@ -36,61 +60,66 @@
         #region Methods
         private async void LoadTournaments()
         {
-        //    if (!CrossConnectivity.Current.IsConnected)
-        //    {
-        //        await dialogService.ShowMessage("Error", "Check you internet connection.");
-        //        return;
-        //    }
+            var connection = await this.apiService.CheckConnection();
+            if (!connection.IsSuccess)
+            {
+                this.IsRunning = false;
+                this.IsEnabled = true;
+                await dialogService.ShowMessage("Error", "Check you internet connection.");
 
-        //    var isReachable = await CrossConnectivity.Current.IsRemoteReachable("google.com");
-        //    if (!isReachable)
-        //    {
-        //        await dialogService.ShowMessage("Error", "Check you internet connection.");
-        //        return;
-        //    }
+                //await Application.Current.MainPage.DisplayAlert(Languages.Error, connection.Message, Languages.Accept);
+                return;
+            }
 
-        //    IsRefreshing = true;
-        //    var parameters = dataService.First<Parameter>(false);
-        //    var user = dataService.First<User>(false);
-        //    var response = await apiService.Get<Tournament>(
-        //        parameters.URLBase, "/api", "/Tournaments", user.TokenType, user.AccessToken);
-        //    IsRefreshing = false;
+            IsRefreshing = true;
 
-        //    if (!response.IsSuccess)
-        //    {
-        //        await dialogService.ShowMessage("Error", response.Message);
-        //        return;
-        //    }
+            var parameters = dataService.First<Parameter>(false);
+            var user = dataService.First<User>(false);
+            var response = await apiService.Get<Tournament>(
+                parameters.UrlAPI, "/api", "/Tournaments", user.TokenType, user.AccessToken);
+            IsRefreshing = false;
 
-        //    ReloadTournaments((List<Tournament>)response.Result);
-        //}
+            if (!response.IsSuccess)
+            {
+                await dialogService.ShowMessage("Error", response.Message);
+                return;
 
-        //private void ReloadTournaments(List<Tournament> tournaments)
-        //{
-        //    Tournaments.Clear();
-        //    foreach (var tournament in tournaments)
-        //    {
-        //        Tournaments.Add(new TournamentItemViewModel
-        //        {
-        //            Dates = tournament.Dates,
-        //            Groups = tournament.Groups,
-        //            Logo = tournament.Logo,
-        //            Name = tournament.Name,
-        //            TournamentId = tournament.TournamentId,
-        //        });
-        //    }
-        //}
-        //#endregion
+                //await Application.Current.MainPage.DisplayAlert(
+                //    Languages.Error,
+                //    Languages.SomethingWrong,
+                //    Languages.Accept);
+                //return;
+            }
 
-        //#region Commands
-        //public ICommand RefreshCommand
-        //{
-        //    get { return new RelayCommand(Refresh); }
-        //}
+            ReloadTournaments((List<Tournament>)response.Result);
+        }
 
-        //private void Refresh()
-        //{
-        //    LoadTournaments();
+        private void ReloadTournaments(List<Tournament> tournaments)
+        {
+            Tournaments.Clear();
+            foreach (var tournament in tournaments)
+            {
+                Tournaments.Add(new TournamentItemViewModel
+                {
+                    Dates = tournament.Dates,
+                    Groups = tournament.Groups,
+                    Logo = tournament.Logo,
+                    Name = tournament.Name,
+                    TournamentId = tournament.TournamentId,
+                });
+            }
+        }
+        #endregion
+
+        #region Commands
+        public ICommand RefreshCommand
+        {
+            get { return new RelayCommand(Refresh); }
+        }
+
+        private void Refresh()
+        {
+            LoadTournaments();
         }
         #endregion
     }
