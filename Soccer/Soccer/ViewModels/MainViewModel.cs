@@ -35,7 +35,7 @@
 
         public GroupViewModel Group { get; set; }
 
-        public UsersGroupViewModel UserGroup { get; set; }
+        public UserGroupViewModel UserGroup { get; set; }
 
         public PredictionViewModel Prediction { get; set; }
 
@@ -48,12 +48,18 @@
         public ForgotPasswordViewModel ForgotPassword { get; set; }
 
         public ChangePasswordViewModel ChangePassword { get; set; }
+
+        public UsersGroupViewModel UsersGroup { get; set; }
         #endregion
 
         #region Constructor
         public MainViewModel()
         {
             instance = this;
+
+            apiService = new ApiService();
+            dataService = new DataService();
+
             Login = new LoginViewModel();
             this.LoadMenu();
         }
@@ -142,7 +148,7 @@
             var connection = await this.apiService.CheckConnection();
             if (!connection.IsSuccess)
             {              
-                return;
+                return; // Do nichim
             }
 
             var parameters = dataService.First<Parameter>(false);
@@ -156,11 +162,12 @@
                 return; // Do nichim
             }
 
-            var point = (Models.Point)response.Result;
+            var point = (Point)response.Result;
             if (CurrentUser.Points != point.Points)
             {
                 CurrentUser.Points = point.Points;
                 dataService.Update(CurrentUser);
+                //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentUser"));
             }
         }
         #endregion
