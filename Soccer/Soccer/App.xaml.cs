@@ -1,12 +1,13 @@
 ﻿namespace Soccer
 {
-    using Soccer.Helpers;
-    using Soccer.Models;
+    using Helpers;
+    using Models;
     using Soccer.Services;
     using Soccer.ViewModels;
     using Soccer.Views;
     using System;
     using Xamarin.Forms;
+    using System.Threading.Tasks;
 
     public partial class App : Application
 	{
@@ -36,7 +37,7 @@
                 user.FavoriteTeam = favoriteTeam;
                 var mainViewModel = MainViewModel.GetInstance();
                 mainViewModel.CurrentUser = user;
-                //mainViewModel.RegisterDevice();
+                mainViewModel.RegisterDevice();
                 Application.Current.MainPage = new MasterPage();
             }
             else
@@ -47,6 +48,70 @@
         #endregion
 
         #region Methods
+        public static Action HideLoginView
+        {
+            get
+            {
+                return new Action(() => Application.Current.MainPage =
+                                  new NavigationPage(new LoginPage()));
+            }
+        }
+
+        public static async Task NavigateToProfile(FacebookResponse profile)
+        {
+            if (profile == null)
+            {
+                Application.Current.MainPage = new NavigationPage(new LoginPage());
+                return;
+            }
+
+            var apiService = new ApiService();
+            var dataService = new DataService();
+            var dialogService = new DialogService();
+
+            var parameters = dataService.First<Parameter>(false);
+            var token = await apiService.LoginFacebook(
+                parameters.UrlAPI,
+                "/api",
+                "/Users/LoginFacebook",
+                profile);
+
+            if (token == null)
+            {
+                Application.Current.MainPage = new NavigationPage(new LoginPage());
+                return;
+            }
+
+            var response = await apiService.GetUserByEmail(
+                parameters.UrlAPI,
+                "/api",
+                "/Users/GetUserByEmail",
+                token.TokenType,
+                token.AccessToken,
+                token.UserName);
+
+            if (!response.IsSuccess)
+            {
+                await dialogService.ShowMessage("Error", "Problem ocurred retrieving user information, try latter.");
+                return;
+            }
+
+            var user = (User)response.Result;
+            user.AccessToken = token.AccessToken;
+            user.TokenType = token.TokenType;
+            user.TokenExpires = token.Expires;
+            user.IsRemembered = true;
+            user.Password = profile.Id;
+            dataService.DeleteAllAndInsert(user.FavoriteTeam);
+            dataService.DeleteAllAndInsert(user.UserType);
+            dataService.DeleteAllAndInsert(user);
+
+            var mainViewModel = MainViewModel.GetInstance();
+            mainViewModel.CurrentUser = user;
+            mainViewModel.RegisterDevice();
+            Application.Current.MainPage = new MasterPage();
+        }
+
         private void LoadParameters()
         {
             var urlAPI = Application.Current.Resources["UrlAPI"].ToString();
@@ -69,6 +134,7 @@
                 dataService.Update(parameter);
             }
         }
+
         protected override void OnStart ()
 		{
 			// Handle when your app starts

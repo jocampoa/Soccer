@@ -3,8 +3,13 @@
     using GalaSoft.MvvmLight.Command;
     using Soccer.Models;
     using System.Collections.ObjectModel;
+    using System.ComponentModel;
     using System.Windows.Input;
+    using System;
+    using Plugin.Connectivity;
     using Soccer.Services;
+    using Xamarin.Forms;
+    using Soccer.Interfaces;
 
     public class MainViewModel : BaseViewModel
     {
@@ -50,6 +55,8 @@
         public ChangePasswordViewModel ChangePassword { get; set; }
 
         public UsersGroupViewModel UsersGroup { get; set; }
+
+        public ProfileViewModel Profile { get; set; }
         #endregion
 
         #region Constructor
@@ -80,11 +87,11 @@
         #endregion
 
         #region Methods
-        //public void RegisterDevice()
-        //{
-        //    var register = DependencyService.Get<IRegisterDevice>();
-        //    register.RegisterDevice();
-        //}
+        public void RegisterDevice()
+        {
+            var register = DependencyService.Get<IRegisterDevice>();
+            register.RegisterDevice();
+        }
 
         private void LoadMenu()
         {
@@ -162,7 +169,7 @@
                 return; // Do nichim
             }
 
-            var point = (Point)response.Result;
+            var point = (Models.Point)response.Result;
             if (CurrentUser.Points != point.Points)
             {
                 CurrentUser.Points = point.Points;

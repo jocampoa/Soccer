@@ -64,8 +64,7 @@
                 MainViewModel.GetInstance().Config = new ConfigViewModel(mainViewModel.CurrentUser);
                 App.Navigator.PushAsync(new ConfigPage());
             }
-
-            
+         
             else if (this.PageName == "UserGroupPage")
             {
                 MainViewModel.GetInstance().UserGroup = new UserGroupViewModel();

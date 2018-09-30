@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using Soccer.Backend.Models;
 using Soccer.Domain;
 using Soccer.Backend.Helpers;
+using Microsoft.Azure.NotificationHubs;
 
 namespace Soccer.Backend.Controllers
 {
@@ -17,6 +18,12 @@ namespace Soccer.Backend.Controllers
     public class TournamentsController : Controller
     {
         private LocalDataContext db = new LocalDataContext();
+        private NotificationHubClient hub;
+
+        public TournamentsController()
+        {
+            hub = NotificationHubClient.CreateClientFromConnectionString("Endpoint=sb://zuluhub2.servicebus.windows.net/;SharedAccessKeyName=DefaultFullSharedAccessSignature;SharedAccessKey=J9t78uCQkWHaOeg7q+FhOYBOeGXd3rdx6xHdTQ012sg=", "Zulu2");
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -152,17 +159,17 @@ namespace Soccer.Backend.Controllers
 
                     if (noPoints.Count > 0)
                     {
-                        //await SendNotificationNoPoints(noPoints, oldMatch);
+                        await SendNotificationNoPoints(noPoints, oldMatch);
                     }
 
                     if (onePoint.Count > 0)
                     {
-                        //await SendNotificationOnePoint(onePoint, oldMatch);
+                        await SendNotificationOnePoint(onePoint, oldMatch);
                     }
 
                     if (threePoints.Count > 0)
                     {
-                        //await SendNotificationThreePoints(threePoints, oldMatch);
+                        await SendNotificationThreePoints(threePoints, oldMatch);
                     }
 
                     return RedirectToAction(string.Format("DetailsDate/{0}", oldMatch.DateId));
@@ -191,26 +198,57 @@ namespace Soccer.Backend.Controllers
             return 3; // Draw
         }
 
-        //private async Task SendNotificationNoPoints(List<string> tags, Match match)
-        //{
-        //    var message = string.Format("{0} {1} Vs. {2} {3}, Has finished... sorry you don't gain any point.",
-        //        match.Local.Initials, match.LocalGoals, match.VisitorGoals, match.Visitor.Initials);
-        //    await SendNotification(tags, message);
-        //}
+        private async Task SendNotificationNoPoints(List<string> tags, Match match)
+        {
+            var message = string.Format("{0} {1} Vs. {2} {3}, Has finished... sorry you don't gain any point.",
+                match.Local.Initials, match.LocalGoals, match.VisitorGoals, match.Visitor.Initials);
+            await SendNotification(tags, message);
+        }
 
-        //private async Task SendNotificationOnePoint(List<string> tags, Match match)
-        //{
-        //    var message = string.Format("{0} {1} Vs. {2} {3}, Has finished and you have gotten 1 point, congratulations!.",
-        //        match.Local.Initials, match.LocalGoals, match.VisitorGoals, match.Visitor.Initials);
-        //    await SendNotification(tags, message);
-        //}
+        private async Task SendNotificationOnePoint(List<string> tags, Match match)
+        {
+            var message = string.Format("{0} {1} Vs. {2} {3}, Has finished and you have gotten 1 point, congratulations!.",
+                match.Local.Initials, match.LocalGoals, match.VisitorGoals, match.Visitor.Initials);
+            await SendNotification(tags, message);
+        }
 
-        //private async Task SendNotificationThreePoints(List<string> tags, Match match)
-        //{
-        //    var message = string.Format("{0} {1} Vs. {2} {3}, Has finished and you have gotten 3 points, congratulations!.",
-        //        match.Local.Initials, match.LocalGoals, match.VisitorGoals, match.Visitor.Initials);
-        //    await SendNotification(tags, message);
-        //}
+        private async Task SendNotificationThreePoints(List<string> tags, Match match)
+        {
+            var message = string.Format("{0} {1} Vs. {2} {3}, Has finished and you have gotten 3 points, congratulations!.",
+                match.Local.Initials, match.LocalGoals, match.VisitorGoals, match.Visitor.Initials);
+            await SendNotification(tags, message);
+        }
+
+        private async Task SendNotification(List<string> tags, string message)
+        {
+            try
+            {
+                do
+                {
+                    if (tags.Count <= 20)
+                    {
+                        await hub.SendGcmNativeNotificationAsync("{ \"data\" : {\"Message\":\"" + message + "\"}}", tags);
+                        tags.Clear();
+                    }
+                    else
+                    {
+                        var tags20 = new List<string>();
+                        for (int i = 0; i < 20; i++)
+                        {
+                            tags20.Add(tags[i]);
+                        }
+
+                        tags.RemoveRange(0, 20);
+                        await hub.SendGcmNativeNotificationAsync("{ \"data\" : {\"Message\":\"" + message + "\"}}", tags20);
+                    }
+                } while (tags.Count > 0);
+
+            }
+            catch (Exception ex)
+            {
+                ex.Message.ToString();
+            }
+        }
 
         public async Task<ActionResult> CloseMatch(int? id)
         {

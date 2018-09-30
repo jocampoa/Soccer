@@ -216,6 +216,7 @@
 
             var mainViewModel = MainViewModel.GetInstance();
             mainViewModel.CurrentUser = user;
+            mainViewModel.RegisterDevice();
             Application.Current.MainPage = new MasterPage();
 
             this.Email = null;

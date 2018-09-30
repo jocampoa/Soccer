@@ -1,19 +1,35 @@
-﻿using System;
-
-using Android.App;
-using Android.Content.PM;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using Android.OS;
-
-namespace Soccer.Droid
+﻿namespace Soccer.Droid
 {
-    [Activity(Label = "Soccer", Icon = "@drawable/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    using Android.App;
+    using Android.Content.PM;
+    using Android.OS;
+
+    [Activity(
+        Label = "Soccer", 
+        Icon = "@drawable/icon", 
+        Theme = "@style/MainTheme", 
+        MainLauncher = true, 
+        ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
+        #region Singleton
+        private static MainActivity instance;
+
+        public static MainActivity GetInstance()
+        {
+            if (instance == null)
+            {
+                return new MainActivity();
+            }
+
+            return instance;
+        }
+        #endregion
+
+        #region Methods
         protected override void OnCreate(Bundle bundle)
         {
+            instance = this;
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
@@ -22,6 +38,7 @@ namespace Soccer.Droid
             global::Xamarin.Forms.Forms.Init(this, bundle);
             LoadApplication(new App());
         }
+        #endregion
     }
 }
 

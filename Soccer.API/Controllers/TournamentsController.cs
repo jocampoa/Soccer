@@ -19,6 +19,55 @@ namespace Soccer.API.Controllers
     {
         private DataContext db = new DataContext();
 
+        [Route("GetResults/{tournamentGroupId}/{userId}")]
+        public async Task<IHttpActionResult> GetResults(int tournamentGroupId, int userId)
+        {
+            var qry = await (from p in db.Predictions
+                             join m in db.Matches on p.MatchId equals m.MatchId
+                             where m.TournamentGroupId == tournamentGroupId && p.UserId == userId
+                             select new { p }).ToListAsync();
+            var results = new List<Result>();
+
+            foreach (var item in qry)
+            {
+                if (item.p.Match.DateTime <= DateTime.Now.AddHours(-5))
+                {
+                    var result = new Result
+                    {
+                        LocalGoals = item.p.LocalGoals,
+                        Match = ToMatchResponse(item.p.Match),
+                        MatchId = item.p.MatchId,
+                        Points = item.p.Points,
+                        PredictionId = item.p.PredictionId,
+                        UserId = item.p.UserId,
+                        VisitorGoals = item.p.VisitorGoals,
+                    };
+
+                    results.Add(result);
+                }
+            }
+
+            return Ok(results);
+        }
+
+        private MatchResponse ToMatchResponse(Match match)
+        {
+            return new MatchResponse
+            {
+                DateId = match.DateId,
+                DateTime = match.DateTime,
+                Local = match.Local,
+                LocalGoals = match.LocalGoals,
+                LocalId = match.LocalId,
+                MatchId = match.MatchId,
+                StatusId = match.StatusId,
+                TournamentGroupId = match.TournamentGroupId,
+                Visitor = match.Visitor,
+                VisitorGoals = match.VisitorGoals,
+                VisitorId = match.VisitorId,
+            };
+        }
+
         [Route("GetMatchesToPredict/{tournamentId}/{userId}")]
         public async Task<IHttpActionResult> GetMatchesToPredict(int tournamentId, int userId)
         {
