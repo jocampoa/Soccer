@@ -6,6 +6,7 @@
     using System.Windows.Input;
     using Xamarin.Forms;
     using Views;
+    using Soccer.Helpers;
 
     public class LoginViewModel : BaseViewModel
     {
@@ -13,8 +14,6 @@
         private ApiService apiService;
 
         private DataService dataService;
-
-        private DialogService dialogService; // borrar
 
         private bool isRunning;
 
@@ -46,8 +45,6 @@
         {
             this.apiService = new ApiService();
             this.dataService = new DataService();
-
-            this.dialogService = new DialogService(); //borrar
 
             this.IsEnabled = true;
             this.IsRemembered = true;
@@ -111,26 +108,20 @@
         {
             if (string.IsNullOrEmpty(this.Email))
             {
-                await dialogService.ShowMessage("Error", "You must enter the user email.");
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    Languages.EmailValidation,
+                    Languages.Accept);
                 return;
-
-                //await Application.Current.MainPage.DisplayAlert(
-                //    Languages.Error,
-                //    Languages.EmailValidation,
-                //    Languages.Accept);
-                //return;
             }
 
             if (string.IsNullOrEmpty(this.Password))
             {
-                await dialogService.ShowMessage("Error", "You must enter a password.");
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    Languages.PasswordValidation,
+                    Languages.Accept);
                 return;
-
-                //await Application.Current.MainPage.DisplayAlert(
-                //    Languages.Error,
-                //    Languages.PasswordValidation,
-                //    Languages.Accept);
-                //return;
             }
 
             IsRunning = true;
@@ -141,9 +132,8 @@
             {
                 this.IsRunning = false;
                 this.IsEnabled = true;
-                await dialogService.ShowMessage("Error", "Check you internet connection.");
 
-                //await Application.Current.MainPage.DisplayAlert(Languages.Error, connection.Message, Languages.Accept);
+                await Application.Current.MainPage.DisplayAlert(Languages.Error, connection.Message, Languages.Accept);
                 return;
             }
 
@@ -154,32 +144,28 @@
             {
                 this.IsRunning = false;
                 this.IsEnabled = true;
-                await dialogService.ShowMessage("Error", "The user name or password in incorrect.");
-                this.Password = string.Empty;
-                return;
 
-                //await Application.Current.MainPage.DisplayAlert(
-                //    Languages.Error,
-                //    Languages.SomethingWrong,
-                //    Languages.Accept);
-                //return;
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    Languages.SomethingWrong,
+                    Languages.Accept);
+
+                return;
             }
 
             if (string.IsNullOrEmpty(token.AccessToken))
             {
                 this.IsRunning = false;
                 this.IsEnabled = true;
-                await dialogService.ShowMessage("Error", token.ErrorDescription);
+
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    Languages.LoginError,
+                    Languages.Accept);
+
                 this.Password = string.Empty;
+
                 return;
-
-                //await Application.Current.MainPage.DisplayAlert(
-                //    Languages.Error,
-                //    Languages.LoginError,
-                //    Languages.Accept);
-
-                //this.Password = string.Empty;
-                //return;
             }
 
             var response = await this.apiService.GetUserByEmail(apiSecurity,
@@ -188,19 +174,6 @@
                 token.TokenType,
                 token.AccessToken,
                 this.Email);
-
-            if (!response.IsSuccess)
-            {
-                IsRunning = false;
-                IsEnabled = true;
-                await dialogService.ShowMessage("Error", "Problem ocurred retrieving user information, try latter.");
-                return;
-
-                //
-            }
-
-            IsRunning = false;
-            IsEnabled = true;
 
             var user = (User)response.Result;
 
@@ -220,8 +193,8 @@
             Application.Current.MainPage = new MasterPage();
 
             this.Email = null;
-            this.Password = null;
-            #endregion
+            this.Password = null;         
         }
+        #endregion
     }
 }

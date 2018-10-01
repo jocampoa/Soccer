@@ -17,7 +17,6 @@
     {
         #region Attributes
         private ApiService apiService;
-        private DialogService dialogService;
         private DataService dataService;
         private bool isRunning;
         private bool isEnabled;
@@ -88,7 +87,6 @@
             this.currentUser = currentUser;
 
             apiService = new ApiService();
-            dialogService = new DialogService();
             dataService = new DataService();
 
             Leagues = new ObservableCollection<LeagueItemViewModel>();
@@ -116,13 +114,11 @@
                 IsRunning = true;
                 IsEnabled = false;
 
-                await dialogService.ShowMessage("Error", "Check you internet connection.");
-
-                //await Application.Current.MainPage.DisplayAlert(
-                //    "Error",
-                //    connection.Message,
-                //    "Accept");
-                //return;
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    connection.Message,
+                    Languages.Accept);
+                return;
             }
 
             var parameters = dataService.First<Parameter>(false);
@@ -133,7 +129,10 @@
 
             if (!response.IsSuccess)
             {
-                await dialogService.ShowMessage("Error", response.Message);
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    response.Message,
+                    Languages.Accept);
                 return;
             }
 
@@ -207,31 +206,46 @@
         {
             if (string.IsNullOrEmpty(User.FirstName))
             {
-                await dialogService.ShowMessage("Error", "You must enter a first name.");
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    Languages.ValidationFirstName,
+                    Languages.Accept);
                 return;
             }
 
             if (string.IsNullOrEmpty(User.LastName))
             {
-                await dialogService.ShowMessage("Error", "You must enter a last name.");
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    Languages.ValidationLastName,
+                    Languages.Accept);
                 return;
             }
 
             if (string.IsNullOrEmpty(User.Email))
             {
-                await dialogService.ShowMessage("Error", "You must enter a email.");
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    Languages.EmailValidation,
+                    Languages.Accept);
                 return;
             }
 
             if (string.IsNullOrEmpty(User.NickName))
             {
-                await dialogService.ShowMessage("Error", "You must enter a nick name.");
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    Languages.ValidationNickName,
+                    Languages.Accept);
                 return;
             }
 
             if (FavoriteTeamId == 0)
             {
-                await dialogService.ShowMessage("Error", "You must select a favorite team.");
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    Languages.ValidationFavoriteTeam,
+                    Languages.Accept);
                 return;
             }
 
@@ -240,9 +254,11 @@
             {
                 this.IsRunning = false;
                 this.IsEnabled = true;
-                await dialogService.ShowMessage("Error", "Check you internet connection.");
 
-                //await Application.Current.MainPage.DisplayAlert(Languages.Error, connection.Message, Languages.Accept);
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error, 
+                    connection.Message, 
+                    Languages.Accept);
                 return;
             }
 
@@ -277,7 +293,10 @@
             {
                 IsRunning = false;
                 IsEnabled = true;
-                await dialogService.ShowMessage("Error", response.Message);
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    response.Message,
+                    Languages.Accept);
                 return;
             }
 
@@ -339,7 +358,10 @@
 
             if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
             {
-                await dialogService.ShowMessage("No Camera", ":( No camera available.");
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    Languages.NoCamera,
+                    Languages.Accept);
                 return;
             }
 

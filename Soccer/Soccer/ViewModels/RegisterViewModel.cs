@@ -24,7 +24,6 @@
 
         #region Attributes
         private ApiService apiService;
-        private DialogService dialogService;
         private DataService dataService;
         private bool isRunning;
         private bool isEnabled;
@@ -111,7 +110,6 @@
         public RegisterViewModel()
         {
             apiService = new ApiService();
-            dialogService = new DialogService();
             dataService = new DataService();
 
             Leagues = new ObservableCollection<LeagueItemViewModel>();
@@ -131,9 +129,11 @@
             {
                 this.IsRunning = false;
                 this.IsEnabled = true;
-                await dialogService.ShowMessage("Error", "Check you internet connection.");
 
-                //await Application.Current.MainPage.DisplayAlert(Languages.Error, connection.Message, Languages.Accept);
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error, 
+                    connection.Message, 
+                    Languages.Accept);
                 return;
             }
 
@@ -148,7 +148,11 @@
 
             if (!response.IsSuccess)
             {
-                await dialogService.ShowMessage("Error", response.Message);
+
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    response.Message,
+                    Languages.Accept);
                 return;
             }
 
@@ -201,130 +205,84 @@
 
         private async void Save()
         {
-            if (string.IsNullOrEmpty(FirstName))
+            if (string.IsNullOrEmpty(this.FirstName))
             {
-                await dialogService.ShowMessage("Error", "You must enter a first name.");
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    Languages.ValidationFirstName,
+                    Languages.Accept);
                 return;
-
-                //if (string.IsNullOrEmpty(this.FirstName))
-                //{
-                //    await Application.Current.MainPage.DisplayAlert(
-                //        Languages.Error,
-                //        Languages.FirstNameValidation,
-                //        Languages.Accept);
-                //    return;
-                //}
-
             }
 
-            if (string.IsNullOrEmpty(LastName))
+            if (string.IsNullOrEmpty(this.LastName))
             {
-                await dialogService.ShowMessage("Error", "You must enter a last name.");
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    Languages.ValidationLastName,
+                    Languages.Accept);
                 return;
-
-                //if (string.IsNullOrEmpty(this.LastName))
-                //{
-                //    await Application.Current.MainPage.DisplayAlert(
-                //        Languages.Error,
-                //        Languages.LastNameValidation,
-                //        Languages.Accept);
-                //    return;
-                //}
-
-
             }
 
-            if (string.IsNullOrEmpty(Password))
+            if (string.IsNullOrEmpty(this.Password))
             {
-                await dialogService.ShowMessage("Error", "You must enter a password.");
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    Languages.PasswordValidation,
+                    Languages.Accept);
                 return;
-
-                //if (string.IsNullOrEmpty(this.Password))
-                //{
-                //    await Application.Current.MainPage.DisplayAlert(
-                //        Languages.Error,
-                //        Languages.PasswordValidation,
-                //        Languages.Accept);
-                //    return;
-                //}
-
-
             }
 
-            if (Password.Length < 6)
+            if (this.Password.Length < 6)
             {
-                await dialogService.ShowMessage("Error", "The password must have at least 6 characters.");
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    Languages.ValidationPassword2,
+                    Languages.Accept);
                 return;
-
-                //if (this.Password.Length < 6)
-                //{
-                //    await Application.Current.MainPage.DisplayAlert(
-                //        Languages.Error,
-                //        Languages.PasswordValidation2,
-                //        Languages.Accept);
-                //    return;
-                //}
-
             }
 
             if (string.IsNullOrEmpty(PasswordConfirm))
             {
-                await dialogService.ShowMessage("Error", "You must enter a password confirm.");
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    Languages.ValidationConfirmPassword,
+                    Languages.Accept);
                 return;
-
-
-                //if (string.IsNullOrEmpty(this.Confirm))
-                //{
-                //    await Application.Current.MainPage.DisplayAlert(
-                //        Languages.Error,
-                //        Languages.ConfirmValidation,
-                //        Languages.Accept);
-                //    return;
-                //}
             }
 
             if (Password != PasswordConfirm)
             {
-                await dialogService.ShowMessage("Error", "The password and confirm does not match.");
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    Languages.ConfirmValidation,
+                    Languages.Accept);
                 return;
-
-
-                //if (this.Password != this.Confirm)
-                //{
-                //    await Application.Current.MainPage.DisplayAlert(
-                //        Languages.Error,
-                //        Languages.ConfirmValidation2,
-                //        Languages.Accept);
-                //    return;
-                //}
-
             }
 
             if (string.IsNullOrEmpty(Email))
             {
-                await dialogService.ShowMessage("Error", "You must enter a email.");
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    Languages.EmailValidation,
+                    Languages.Accept);
                 return;
-
-                //if (string.IsNullOrEmpty(this.Email))
-                //{
-                //    await Application.Current.MainPage.DisplayAlert(
-                //        Languages.Error,
-                //        Languages.EmailValidation,
-                //        Languages.Accept);
-                //    return;
-                //}
-
             }
 
             if (string.IsNullOrEmpty(NickName))
             {
-                await dialogService.ShowMessage("Error", "You must enter a nick name.");
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    Languages.ValidationNickName,
+                    Languages.Accept);
                 return;
             }
 
             if (FavoriteTeamId == 0)
             {
-                await dialogService.ShowMessage("Error", "You must select a favorite team.");
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    Languages.ValidationFavoriteTeam,
+                    Languages.Accept);
                 return;
             }
 
@@ -336,13 +294,12 @@
             {
                 this.IsRunning = false;
                 this.IsEnabled = true;
-                await dialogService.ShowMessage("Error", "Check you internet connection.");
 
-                //await Application.Current.MainPage.DisplayAlert(
-                //    Languages.Error,
-                //    checkConnetion.Message,
-                //    Languages.Accept);
-                //return;
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    checkConnetion.Message,
+                    Languages.Accept);
+                return;
             }
 
             var imageArray = FilesHelper.ReadFully(file.GetStream());
@@ -368,12 +325,21 @@
 
             if (!response.IsSuccess)
             {
-                await dialogService.ShowMessage("Error", response.Message);
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    response.Message,
+                    Languages.Accept);
                 return;
             }
 
-            await dialogService.ShowMessage("Confirmation", "The user was created, please login.");
+            await Application.Current.MainPage.DisplayAlert(
+                Languages.Confirmation,
+                Languages.UserCreate,
+                Languages.Accept);
+
             await Application.Current.MainPage.Navigation.PushAsync(new LoginPage());
+
+            return;          
         }
 
         public ICommand CancelCommand
@@ -403,7 +369,10 @@
 
             if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
             {
-                await dialogService.ShowMessage("No Camera", ":( No camera available.");
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    Languages.NoCamera,
+                    Languages.Accept);
                 return;
             }
 

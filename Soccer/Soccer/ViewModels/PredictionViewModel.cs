@@ -1,6 +1,7 @@
 ﻿namespace Soccer.ViewModels
 {
     using GalaSoft.MvvmLight.Command;
+    using Soccer.Helpers;
     using Soccer.Models;
     using Soccer.Services;
     using System;
@@ -10,6 +11,7 @@
     using System.Text;
     using System.Threading.Tasks;
     using System.Windows.Input;
+    using Xamarin.Forms;
 
     public class PredictionViewModel : Match, INotifyPropertyChanged
     {
@@ -19,7 +21,6 @@
 
         #region Attributes
         private ApiService apiService;
-        private DialogService dialogService;
         private DataService dataService;
         private Match match;
         private bool isRunning;
@@ -70,7 +71,6 @@
             this.match = match;
 
             apiService = new ApiService();
-            dialogService = new DialogService();
             dataService = new DataService();
 
             DateId = match.DateId;
@@ -106,13 +106,19 @@
         {
             if (string.IsNullOrEmpty(GoalsLocal))
             {
-                await dialogService.ShowMessage("Error", "You must enter a valid local goals.");
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    Languages.ValidationGoalsLocal,
+                    Languages.Accept);
                 return;
             }
 
             if (string.IsNullOrEmpty(GoalsVisitor))
             {
-                await dialogService.ShowMessage("Error", "You must enter a valid visitor goals.");
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    Languages.ValidationGoalsVisitor,
+                    Languages.Accept);
                 return;
             }
 
@@ -140,7 +146,10 @@
 
             if (!response.IsSuccess)
             {
-                await dialogService.ShowMessage("Error", response.Message);
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    response.Message,
+                    Languages.Accept);
                 return;
             }
 

@@ -68,5 +68,455 @@ namespace Soccer.Resources {
                 return ResourceManager.GetString("Accept", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change Password.
+        /// </summary>
+        public static string ChangePassword {
+            get {
+                return ResourceManager.GetString("ChangePassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Config.
+        /// </summary>
+        public static string Config {
+            get {
+                return ResourceManager.GetString("Config", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm.
+        /// </summary>
+        public static string Confirm {
+            get {
+                return ResourceManager.GetString("Confirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirmation.
+        /// </summary>
+        public static string Confirmation {
+            get {
+                return ResourceManager.GetString("Confirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm Password.
+        /// </summary>
+        public static string ConfirmPassword {
+            get {
+                return ResourceManager.GetString("ConfirmPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The current password doesn´t  match..
+        /// </summary>
+        public static string ConfirmValidation {
+            get {
+                return ResourceManager.GetString("ConfirmValidation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The new password and confirm does not match..
+        /// </summary>
+        public static string ConfirmValidation2 {
+            get {
+                return ResourceManager.GetString("ConfirmValidation2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your new password has been sent, check the new password in your email..
+        /// </summary>
+        public static string ConfirmValidation3 {
+            get {
+                return ResourceManager.GetString("ConfirmValidation3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Password.
+        /// </summary>
+        public static string CurrentPassword {
+            get {
+                return ResourceManager.GetString("CurrentPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must enter the current password..
+        /// </summary>
+        public static string CurrentPasswordValidation {
+            get {
+                return ResourceManager.GetString("CurrentPasswordValidation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Prediction.
+        /// </summary>
+        public static string EditPrediction {
+            get {
+                return ResourceManager.GetString("EditPrediction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email.
+        /// </summary>
+        public static string Email {
+            get {
+                return ResourceManager.GetString("Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter your email....
+        /// </summary>
+        public static string EmailPlaceHolder {
+            get {
+                return ResourceManager.GetString("EmailPlaceHolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must enter an email..
+        /// </summary>
+        public static string EmailValidation {
+            get {
+                return ResourceManager.GetString("EmailValidation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        public static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Forgot your password?.
+        /// </summary>
+        public static string Forgot {
+            get {
+                return ResourceManager.GetString("Forgot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your password can&apos;t be recovered..
+        /// </summary>
+        public static string ForgotPasswordError {
+            get {
+                return ResourceManager.GetString("ForgotPasswordError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login.
+        /// </summary>
+        public static string Login {
+            get {
+                return ResourceManager.GetString("Login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The email or password is incorrect.
+        /// </summary>
+        public static string LoginError {
+            get {
+                return ResourceManager.GetString("LoginError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login with Facebook.
+        /// </summary>
+        public static string LoginFacebook {
+            get {
+                return ResourceManager.GetString("LoginFacebook", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Menu.
+        /// </summary>
+        public static string Menu {
+            get {
+                return ResourceManager.GetString("Menu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to My Results.
+        /// </summary>
+        public static string MyResults {
+            get {
+                return ResourceManager.GetString("MyResults", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NewPassword.
+        /// </summary>
+        public static string NewPassword {
+            get {
+                return ResourceManager.GetString("NewPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must enter a new password..
+        /// </summary>
+        public static string NewPasswordValidation {
+            get {
+                return ResourceManager.GetString("NewPasswordValidation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No camera available..
+        /// </summary>
+        public static string NoCamera {
+            get {
+                return ResourceManager.GetString("NoCamera", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password.
+        /// </summary>
+        public static string Password {
+            get {
+                return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your password has been changed successfully..
+        /// </summary>
+        public static string PasswordChanged {
+            get {
+                return ResourceManager.GetString("PasswordChanged", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter your password....
+        /// </summary>
+        public static string PasswordPlaceHolder {
+            get {
+                return ResourceManager.GetString("PasswordPlaceHolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must enter a password..
+        /// </summary>
+        public static string PasswordValidation {
+            get {
+                return ResourceManager.GetString("PasswordValidation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Positions.
+        /// </summary>
+        public static string Positions {
+            get {
+                return ResourceManager.GetString("Positions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Register.
+        /// </summary>
+        public static string Register {
+            get {
+                return ResourceManager.GetString("Register", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remember me on this device.
+        /// </summary>
+        public static string Rememberme {
+            get {
+                return ResourceManager.GetString("Rememberme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string Save {
+            get {
+                return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Group.
+        /// </summary>
+        public static string SelectGroup {
+            get {
+                return ResourceManager.GetString("SelectGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select a league....
+        /// </summary>
+        public static string SelectLeague {
+            get {
+                return ResourceManager.GetString("SelectLeague", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Match.
+        /// </summary>
+        public static string SelectMatch {
+            get {
+                return ResourceManager.GetString("SelectMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Tournament.
+        /// </summary>
+        public static string SelectTournament {
+            get {
+                return ResourceManager.GetString("SelectTournament", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select User Group.
+        /// </summary>
+        public static string SelectUserGroup {
+            get {
+                return ResourceManager.GetString("SelectUserGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Soccer.
+        /// </summary>
+        public static string Soccer {
+            get {
+                return ResourceManager.GetString("Soccer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Something was wrong, please try later..
+        /// </summary>
+        public static string SomethingWrong {
+            get {
+                return ResourceManager.GetString("SomethingWrong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The user was created, please login..
+        /// </summary>
+        public static string UserCreate {
+            get {
+                return ResourceManager.GetString("UserCreate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must enter a password confirm.
+        /// </summary>
+        public static string ValidationConfirmPassword {
+            get {
+                return ResourceManager.GetString("ValidationConfirmPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must select a favorite team..
+        /// </summary>
+        public static string ValidationFavoriteTeam {
+            get {
+                return ResourceManager.GetString("ValidationFavoriteTeam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must enter a first name..
+        /// </summary>
+        public static string ValidationFirstName {
+            get {
+                return ResourceManager.GetString("ValidationFirstName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must enter a valid local goals..
+        /// </summary>
+        public static string ValidationGoalsLocal {
+            get {
+                return ResourceManager.GetString("ValidationGoalsLocal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must enter a valid visitor goals..
+        /// </summary>
+        public static string ValidationGoalsVisitor {
+            get {
+                return ResourceManager.GetString("ValidationGoalsVisitor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must enter a last name..
+        /// </summary>
+        public static string ValidationLastName {
+            get {
+                return ResourceManager.GetString("ValidationLastName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must enter a nick name..
+        /// </summary>
+        public static string ValidationNickName {
+            get {
+                return ResourceManager.GetString("ValidationNickName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The current password is equal to new password..
+        /// </summary>
+        public static string ValidationPassword {
+            get {
+                return ResourceManager.GetString("ValidationPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The new password must have at least 6 characters..
+        /// </summary>
+        public static string ValidationPassword2 {
+            get {
+                return ResourceManager.GetString("ValidationPassword2", resourceCulture);
+            }
+        }
     }
 }

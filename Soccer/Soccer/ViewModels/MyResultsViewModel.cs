@@ -1,12 +1,14 @@
 ﻿namespace Soccer.ViewModels
 {
     using GalaSoft.MvvmLight.Command;
+    using Soccer.Helpers;
     using Soccer.Models;
     using Soccer.Services;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
     using System.Windows.Input;
+    using Xamarin.Forms;
 
     public class MyResultsViewModel : BaseViewModel
     {
@@ -14,8 +16,6 @@
         private ApiService apiService;
 
         private DataService dataService;
-
-        private DialogService dialogService; // borrar
 
         private bool isRefreshing;
 
@@ -72,7 +72,6 @@
             this.tournamentGroupId = tournamentGroupId;
 
             apiService = new ApiService();
-            dialogService = new DialogService();
             dataService = new DataService();
 
             Results = new ObservableCollection<ResultItemViewModel>();
@@ -89,9 +88,11 @@
             {
                 this.IsRunning = false;
                 this.IsEnabled = true;
-                await dialogService.ShowMessage("Error", "Check you internet connection.");
 
-                //await Application.Current.MainPage.DisplayAlert(Languages.Error, connection.Message, Languages.Accept);
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error, 
+                    connection.Message, 
+                    Languages.Accept);
                 return;
             }
 
@@ -105,8 +106,10 @@
 
             if (!response.IsSuccess)
             {
-                await dialogService.ShowMessage("Error", response.Message);
-                return;
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    response.Message,
+                    Languages.Accept);
             }
 
             results = (List<Result>)response.Result;

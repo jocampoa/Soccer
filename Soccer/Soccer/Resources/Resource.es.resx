@@ -118,156 +118,156 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Accept" xml:space="preserve">
-    <value>Accept</value>
+    <value>Aceptar</value>
   </data>
   <data name="ChangePassword" xml:space="preserve">
-    <value>Change Password</value>
+    <value>Cambio de Clave</value>
   </data>
   <data name="Config" xml:space="preserve">
-    <value>Config</value>
+    <value>Configuración</value>
   </data>
   <data name="Confirm" xml:space="preserve">
-    <value>Confirm</value>
+    <value>Confirmar</value>
   </data>
   <data name="Confirmation" xml:space="preserve">
-    <value>Confirmation</value>
+    <value>Confirmación</value>
   </data>
   <data name="ConfirmPassword" xml:space="preserve">
-    <value>Confirm Password</value>
+    <value>Confirmar Clave</value>
   </data>
   <data name="ConfirmValidation" xml:space="preserve">
-    <value>The current password doesn´t  match.</value>
+    <value>La clave actual no coincide.</value>
   </data>
   <data name="ConfirmValidation2" xml:space="preserve">
-    <value>The new password and confirm does not match.</value>
+    <value>La nueva clave y la confirmación no coinciden.</value>
   </data>
   <data name="ConfirmValidation3" xml:space="preserve">
-    <value>Your new password has been sent, check the new password in your email.</value>
+    <value>Su nueva clave ha sido enviada, verifique la nueva clave en su correo electrónico.</value>
   </data>
   <data name="CurrentPassword" xml:space="preserve">
-    <value>Current Password</value>
+    <value>Clave Actual</value>
   </data>
   <data name="CurrentPasswordValidation" xml:space="preserve">
-    <value>You must enter the current password.</value>
+    <value>Debe ingresar la clave actual.</value>
   </data>
   <data name="EditPrediction" xml:space="preserve">
-    <value>Edit Prediction</value>
+    <value>Editar Predicción</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>Email</value>
   </data>
   <data name="EmailPlaceHolder" xml:space="preserve">
-    <value>Enter your email...</value>
+    <value>Ingrese email...</value>
   </data>
   <data name="EmailValidation" xml:space="preserve">
-    <value>You must enter an email.</value>
+    <value>Debe ingresar un email.</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
   <data name="Forgot" xml:space="preserve">
-    <value>Forgot your password?</value>
+    <value>¿Olvidó su clave?</value>
   </data>
   <data name="ForgotPasswordError" xml:space="preserve">
-    <value>Your password can't be recovered.</value>
+    <value>Su clave no puede ser recuperada.</value>
   </data>
   <data name="Login" xml:space="preserve">
-    <value>Login</value>
+    <value>Iniciar sesión</value>
   </data>
   <data name="LoginError" xml:space="preserve">
-    <value>The email or password is incorrect</value>
+    <value>Email o contraseña incorrectos.</value>
   </data>
   <data name="LoginFacebook" xml:space="preserve">
-    <value>Login with Facebook</value>
+    <value>Iniciar sesión con Facebook</value>
   </data>
   <data name="Menu" xml:space="preserve">
-    <value>Menu</value>
+    <value>Menú</value>
   </data>
   <data name="MyResults" xml:space="preserve">
-    <value>My Results</value>
+    <value>Mis Resultados</value>
   </data>
   <data name="NewPassword" xml:space="preserve">
-    <value>NewPassword</value>
+    <value>Nueva Clave</value>
   </data>
   <data name="NewPasswordValidation" xml:space="preserve">
-    <value>You must enter a new password.</value>
+    <value>Debe ingresar una nueva clave.</value>
   </data>
   <data name="NoCamera" xml:space="preserve">
-    <value>No camera available.</value>
+    <value>No hay cámara disponible.</value>
   </data>
   <data name="Password" xml:space="preserve">
-    <value>Password</value>
+    <value>Clave:</value>
   </data>
   <data name="PasswordChanged" xml:space="preserve">
-    <value>Your password has been changed successfully.</value>
+    <value>Tu clave ha sido cambiada exitosamente</value>
   </data>
   <data name="PasswordPlaceHolder" xml:space="preserve">
-    <value>Enter your password...</value>
+    <value>Ingrese contraseña...</value>
   </data>
   <data name="PasswordValidation" xml:space="preserve">
-    <value>You must enter a password.</value>
+    <value>Debe ingresar una clave.</value>
   </data>
   <data name="Positions" xml:space="preserve">
-    <value>Positions</value>
+    <value>Posiciones</value>
   </data>
   <data name="Register" xml:space="preserve">
-    <value>Register</value>
+    <value>Registro</value>
   </data>
   <data name="Rememberme" xml:space="preserve">
-    <value>Remember me on this device</value>
+    <value>Recordar mis datos en este dispositivo</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value>Save</value>
+    <value>Guardar</value>
   </data>
   <data name="SelectGroup" xml:space="preserve">
-    <value>Select Group</value>
+    <value>Seleccione Grupo</value>
   </data>
   <data name="SelectLeague" xml:space="preserve">
-    <value>Select a league...</value>
+    <value>Seleccione Liga</value>
   </data>
   <data name="SelectMatch" xml:space="preserve">
-    <value>Select Match</value>
+    <value>Seleccione Partido</value>
   </data>
   <data name="SelectTournament" xml:space="preserve">
-    <value>Select Tournament</value>
+    <value>Seleccione Torneo</value>
   </data>
   <data name="SelectUserGroup" xml:space="preserve">
-    <value>Select User Group</value>
+    <value>Seleccione Grupo de Usuarios</value>
   </data>
   <data name="Soccer" xml:space="preserve">
-    <value>Soccer</value>
+    <value>Fútbol</value>
   </data>
   <data name="SomethingWrong" xml:space="preserve">
-    <value>Something was wrong, please try later.</value>
+    <value>Algo salió mal, por favor intenta más tarde.</value>
   </data>
   <data name="UserCreate" xml:space="preserve">
-    <value>The user was created, please login.</value>
+    <value>El usuario fue creado, por favor inicie sesión</value>
   </data>
   <data name="ValidationConfirmPassword" xml:space="preserve">
-    <value>You must enter a password confirm</value>
+    <value>Debe ingresar una clave de confirmación.</value>
   </data>
   <data name="ValidationFavoriteTeam" xml:space="preserve">
-    <value>You must select a favorite team.</value>
+    <value>Debe seleccionar un equipo favorito.</value>
   </data>
   <data name="ValidationFirstName" xml:space="preserve">
-    <value>You must enter a first name.</value>
+    <value>Debe ingresar un nombre</value>
   </data>
   <data name="ValidationGoalsLocal" xml:space="preserve">
-    <value>You must enter a valid local goals.</value>
+    <value>Debe ingresar un gol de local válido.</value>
   </data>
   <data name="ValidationGoalsVisitor" xml:space="preserve">
-    <value>You must enter a valid visitor goals.</value>
+    <value>Debe ingresar un gol de visitante válido</value>
   </data>
   <data name="ValidationLastName" xml:space="preserve">
-    <value>You must enter a last name.</value>
+    <value>Debe ingresar un apellido</value>
   </data>
   <data name="ValidationNickName" xml:space="preserve">
-    <value>You must enter a nick name.</value>
+    <value>Debe ingresar un apodo.</value>
   </data>
   <data name="ValidationPassword" xml:space="preserve">
-    <value>The current password is equal to new password.</value>
+    <value>La clave actual es igual a la nueva clave</value>
   </data>
   <data name="ValidationPassword2" xml:space="preserve">
-    <value>The new password must have at least 6 characters.</value>
+    <value>La nueva clave debe tener al menos 6 caracteres.</value>
   </data>
 </root>

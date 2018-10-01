@@ -1,17 +1,21 @@
 ﻿namespace Soccer.ViewModels
 {
     using GalaSoft.MvvmLight.Command;
+    using Soccer.Helpers;
     using Soccer.Models;
     using Soccer.Services;
     using System.Windows.Input;
+    using Xamarin.Forms;
 
     public class ChangePasswordViewModel : BaseViewModel
     {
         #region Attributes
         private ApiService apiService;
-        private DialogService dialogService;
+
         private DataService dataService;
+
         private bool isRunning;
+
         private bool isEnabled;
         #endregion
 
@@ -39,7 +43,6 @@
         public ChangePasswordViewModel()
         {
             apiService = new ApiService();
-            dialogService = new DialogService();
             dataService = new DataService();
 
             IsEnabled = true;
@@ -59,7 +62,10 @@
         {
             if (string.IsNullOrEmpty(CurrentPassword))
             {
-                await dialogService.ShowMessage("Error", "You must enter the current password.");
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    Languages.PasswordValidation,
+                    Languages.Accept);
                 return;
             }
 
@@ -67,37 +73,55 @@
 
             if (mainViewModel.CurrentUser.Password != CurrentPassword)
             {
-                await dialogService.ShowMessage("Error", "The current password doesn´t  match.");
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    Languages.ConfirmValidation,
+                    Languages.Accept);
                 return;
             }
 
             if (string.IsNullOrEmpty(NewPassword))
             {
-                await dialogService.ShowMessage("Error", "You must enter a new password.");
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    Languages.NewPasswordValidation,
+                    Languages.Accept);
                 return;
             }
 
             if (NewPassword == CurrentPassword)
             {
-                await dialogService.ShowMessage("Error", "The current password is equal to new password.");
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    Languages.ValidationPassword,
+                    Languages.Accept);
                 return;
             }
 
             if (NewPassword.Length < 6)
             {
-                await dialogService.ShowMessage("Error", "The new password must have at least 6 characters.");
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    Languages.ValidationPassword2,
+                    Languages.Accept);
                 return;
             }
 
             if (string.IsNullOrEmpty(ConfirmPassword))
             {
-                await dialogService.ShowMessage("Error", "You must enter a password confirm.");
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    Languages.ValidationConfirmPassword,
+                    Languages.Accept);
                 return;
             }
 
             if (NewPassword != ConfirmPassword)
             {
-                await dialogService.ShowMessage("Error", "The new password and confirm does not match.");
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    Languages.ConfirmValidation2,
+                    Languages.Accept);
                 return;
             }
 
@@ -122,12 +146,15 @@
 
             if (!response.IsSuccess)
             {
-                await dialogService.ShowMessage("Error", response.Message);
+                await Application.Current.MainPage.DisplayAlert(Languages.Error, response.Message, Languages.Accept);
                 return;
             }
 
-            await dialogService.ShowMessage("Confirm", "Your password has been changed successfully.");
-            await App.Navigator.PopAsync();
+            await Application.Current.MainPage.DisplayAlert(
+                Languages.Confirm,
+                Languages.PasswordChanged,
+               Languages.Accept);
+            return;
         }
         #endregion
     }

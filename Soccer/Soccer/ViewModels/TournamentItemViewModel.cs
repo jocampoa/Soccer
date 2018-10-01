@@ -9,13 +9,18 @@
 
     public class TournamentItemViewModel : Tournament
     {
+        #region Attributes
         private DataService dataService;
+        #endregion
 
+        #region Constructors
         public TournamentItemViewModel()
         {
             dataService = new DataService();
         }
+        #endregion
 
+        #region Commands
         public ICommand SelectTournamentCommand
         {
             get
@@ -39,5 +44,6 @@
                 await App.Navigator.PushAsync(new GroupPage());
             }
         }
+        #endregion
     }
 }

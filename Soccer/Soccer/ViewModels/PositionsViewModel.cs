@@ -1,18 +1,19 @@
 ﻿namespace Soccer.ViewModels
 {
     using GalaSoft.MvvmLight.Command;
+    using Soccer.Helpers;
     using Soccer.Models;
     using Soccer.Services;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Windows.Input;
+    using Xamarin.Forms;
 
     public class PositionsViewModel : BaseViewModel
     {
         #region Attributes
         private ApiService apiService;
         private DataService dataService;
-        private DialogService dialogService;
         private bool isRefreshing;
         private int tournamentGroupId;
         #endregion
@@ -34,7 +35,6 @@
 
             apiService = new ApiService();
             dataService = new DataService();
-            dialogService = new DialogService();
 
             TournamentTeams = new ObservableCollection<TournamentTeamItemViewModel>();
 
@@ -51,13 +51,12 @@
             if (!connection.IsSuccess)
             {
                 this.IsRefreshing = false;
-                await dialogService.ShowMessage("Error", "Check you internet connection.");
 
-                //await Application.Current.MainPage.DisplayAlert(
-                //    "Error",
-                //    connection.Message,
-                //    "Accept");
-                //return;
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    connection.Message,
+                    Languages.Accept);
+                return;
             }
 
             var parameters = dataService.First<Parameter>(false);
@@ -69,7 +68,10 @@
 
             if (!response.IsSuccess)
             {
-                await dialogService.ShowMessage("Error", response.Message);
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    response.Message,
+                    Languages.Accept);
                 return;
             }
 

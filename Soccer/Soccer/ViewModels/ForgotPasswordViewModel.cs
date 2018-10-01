@@ -8,7 +8,8 @@
     using Plugin.Connectivity;
     using Soccer.Models;
     using Soccer.Views;
-    using Android.App;
+    using Soccer.Helpers;
+    using Xamarin.Forms;
 
     public class ForgotPasswordViewModel : BaseViewModel
     {
@@ -16,8 +17,6 @@
         private ApiService apiService;
 
         private DataService dataService;
-
-        private DialogService dialogService; // borrar
 
         private bool isRunning;
 
@@ -44,7 +43,6 @@
         public ForgotPasswordViewModel()
         {
             apiService = new ApiService();
-            dialogService = new DialogService();
             dataService = new DataService();
 
             IsEnabled = true;
@@ -67,22 +65,21 @@
             {
                 this.IsRunning = false;
                 this.IsEnabled = true;
-                await dialogService.ShowMessage("Error", "Check you internet connection.");
 
-                //await Application.Current.MainPage.DisplayAlert(Languages.Error, connection.Message, Languages.Accept);
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error, 
+                    connection.Message, 
+                    Languages.Accept);
                 return;
             }
 
             if (string.IsNullOrEmpty(this.Email))
             {
-                await dialogService.ShowMessage("Error", "You must enter a email.");
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    Languages.EmailValidation,
+                    Languages.Accept);
                 return;
-
-                //await Application.Current.MainPage.DisplayAlert(
-                //    Languages.Error,
-                //    Languages.EmailValidation,
-                //    Languages.Accept);
-                //return;
             }
 
             IsRunning = true;
@@ -97,24 +94,33 @@
 
             if (!response.IsSuccess)
             {
-                await dialogService.ShowMessage("Error", "Your password can't be recovered.");
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    Languages.ForgotPasswordError,
+                    Languages.Accept);
                 return;
             }
 
-            await dialogService.ShowMessage("Confirmation", "Your new password has been sent, check the new password in your email.");
-            App.Current.MainPage = new LoginPage();
+            await Application.Current.MainPage.DisplayAlert(
+                Languages.Confirmation,
+                Languages.ConfirmValidation3,
+                Languages.Accept);
+
+            Application.Current.MainPage = new LoginPage();
+         
         }
 
         public ICommand CancelCommand
         {
             get
-            { return new RelayCommand(Cancel);
+            {
+                return new RelayCommand(Cancel);
             }
         }
 
         private void Cancel()
         {
-            App.Current.MainPage = new LoginPage();
+            Application.Current.MainPage = new LoginPage();
         }
         #endregion
     }

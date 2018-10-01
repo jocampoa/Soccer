@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:i18n="clr-namespace:Soccer.Helpers"
              x:Class="Soccer.Views.LoginPage"
-             Title="Soccer"
+             Title="{i18n:Translate Soccer}"
              BackgroundColor="{StaticResource MainColor}"
              BindingContext="{Binding Main, Source={StaticResource Locator}}">
     <ScrollView
@@ -14,7 +15,7 @@
                 Source="soccer_logo.png">
             </Image>
             <Label
-                Text="Login"
+                Text="{i18n:Translate Login}"
                 FontSize="Large"
                 FontAttributes="Bold"
                 HorizontalOptions="Center"
@@ -29,7 +30,7 @@
                     </Grid.ColumnDefinitions>
                     <Label
                         Grid.Column="0"
-                        Text="Email"
+                        Text="{i18n:Translate Email}"
                         FontAttributes="Bold"
                         HorizontalOptions="Start"
                         VerticalOptions="Center"
@@ -38,7 +39,7 @@
                     <Entry
                         Grid.Column="1"
                         Text="{Binding Email}"
-                        Placeholder="Enter an email..."
+                        Placeholder="{i18n:Translate EmailPlaceHolder}"
                         Keyboard="Email"
                         HorizontalOptions="FillAndExpand"
                         VerticalOptions="Center"
@@ -52,7 +53,7 @@
                     </Grid.ColumnDefinitions>
                     <Label
                         Grid.Column="0"
-                        Text="Password"
+                        Text="{i18n:Translate Password}"
                         FontAttributes="Bold"
                         HorizontalOptions="Start"
                         VerticalOptions="Center"
@@ -61,7 +62,7 @@
                     <Entry
                         Grid.Column="1"
                         Text="{Binding Password}"
-                        Placeholder="Enter a password..."
+                        Placeholder="{i18n:Translate PasswordPlaceHolder}"
                         IsPassword="True"
                         HorizontalOptions="FillAndExpand"
                         VerticalOptions="Center"
@@ -78,7 +79,7 @@
                     IsToggled="{Binding IsRemembered}">
                 </Switch>
                 <Label
-                    Text="Rememberme"
+                    Text="{i18n:Translate Rememberme}"
                     FontAttributes="Bold"
                     HorizontalOptions="Start"
                     VerticalOptions="Center"
@@ -98,7 +99,7 @@
                     HorizontalOptions="FillAndExpand"
                     BackgroundColor="Orange"
                     TextColor="White"
-                    Text="Login">
+                    Text="{i18n:Translate Login}">
                 </Button>
                 <Button
                     Command="{Binding LoginFacebookCommand}"
@@ -107,7 +108,7 @@
                     HorizontalOptions="FillAndExpand"
                     BackgroundColor="Navy"
                     TextColor="White"
-                    Text="Login With Facebook">
+                    Text="{i18n:Translate LoginFacebook}">
                 </Button>
                 <Button
                     Command="{Binding RegisterCommand}"
@@ -116,10 +117,10 @@
                     HorizontalOptions="FillAndExpand"
                     BackgroundColor="Purple"
                     TextColor="White"
-                    Text="Register New User">
+                    Text="{i18n:Translate Register}">
                 </Button>
                 <Label
-                    Text="Forgot your password?"
+                    Text="{i18n:Translate Forgot}"
                     FontAttributes="Bold"
                     HorizontalOptions="Center"
                     VerticalOptions="Center"

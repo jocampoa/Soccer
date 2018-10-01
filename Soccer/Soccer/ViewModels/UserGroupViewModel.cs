@@ -2,18 +2,19 @@
 {
     using GalaSoft.MvvmLight.Command;
     using Plugin.Connectivity;
+    using Soccer.Helpers;
     using Soccer.Models;
     using Soccer.Services;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Windows.Input;
+    using Xamarin.Forms;
 
     public class UserGroupViewModel : BaseViewModel
     {
         #region Attributes
         private ApiService apiService;
-        private DialogService dialogService;
         private DataService dataService;
         private bool isRefreshing;
         private bool isRunning;
@@ -46,7 +47,6 @@
         public UserGroupViewModel()
         {
             apiService = new ApiService();
-            dialogService = new DialogService();
             dataService = new DataService();
 
             UserGroups = new ObservableCollection<UserGroupItemViewModel>();
@@ -63,9 +63,11 @@
             {
                 this.IsRunning = false;
                 this.IsEnabled = true;
-                await dialogService.ShowMessage("Error", "Check you internet connection.");
 
-                //await Application.Current.MainPage.DisplayAlert(Languages.Error, connection.Message, Languages.Accept);
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error, 
+                    connection.Message, 
+                    Languages.Accept);
                 return;
             }
 
@@ -79,7 +81,10 @@
 
             if (!response.IsSuccess)
             {
-                await dialogService.ShowMessage("Error", response.Message);
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    response.Message,
+                    Languages.Accept);
                 return;
             }
 

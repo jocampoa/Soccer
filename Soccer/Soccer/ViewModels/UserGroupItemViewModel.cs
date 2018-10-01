@@ -14,10 +14,13 @@
 
     public class UserGroupItemViewModel : UserGroup
     {
+        #region Constructors
         public UserGroupItemViewModel()
         {
         }
+        #endregion
 
+        #region Commands
         public ICommand SelectGroupCommand
         {
             get
@@ -32,5 +35,6 @@
             mainViewModel.UsersGroup = new UsersGroupViewModel(this);
             await App.Navigator.PushAsync(new UsersGroupPage());
         }
+        #endregion
     }
 }

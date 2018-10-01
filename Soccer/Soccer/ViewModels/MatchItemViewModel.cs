@@ -28,7 +28,6 @@
             var mainViewModel = MainViewModel.GetInstance();
             mainViewModel.Prediction = new PredictionViewModel(this);
 
-            //navigationservice
             await App.Navigator.PushAsync(new PredictionPage());
         }
         #endregion

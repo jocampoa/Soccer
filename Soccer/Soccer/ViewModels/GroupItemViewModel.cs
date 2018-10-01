@@ -8,13 +8,18 @@
 
     public class GroupItemViewModel : Group
     {
+        #region Attributes
         private DataService dataService;
+        #endregion
 
+        #region Constructors
         public GroupItemViewModel()
         {
             dataService = new DataService();
         }
+        #endregion
 
+        #region Commands
         public ICommand SelectGroupCommand
         {
             get
@@ -38,5 +43,6 @@
                 await App.Navigator.PushAsync(new MyResultsPage());
             }
         }
+        #endregion
     }
 }

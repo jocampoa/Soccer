@@ -2,17 +2,18 @@
 {
     using GalaSoft.MvvmLight.Command;
     using Plugin.Connectivity;
+    using Soccer.Helpers;
     using Soccer.Models;
     using Soccer.Services;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Windows.Input;
+    using Xamarin.Forms;
 
     public class MatchViewModel : BaseViewModel
     {
         #region Attributes
         private ApiService apiService;
-        private DialogService dialogService;
         private DataService dataService;
         private bool isRefreshing;
         private int tournamentId;
@@ -36,7 +37,6 @@
             this.tournamentId = tournamentId;
 
             apiService = new ApiService();
-            dialogService = new DialogService();
             dataService = new DataService();
 
             Matches = new ObservableCollection<MatchItemViewModel>();
@@ -61,13 +61,12 @@
             if (!connection.IsSuccess)
             {
                 this.IsRefreshing = false;
-                await dialogService.ShowMessage("Error", "Check you internet connection.");
 
-                //await Application.Current.MainPage.DisplayAlert(
-                //    "Error",
-                //    connection.Message,
-                //    "Accept");
-                //return;
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    connection.Message,
+                    Languages.Accept);
+                return;
             }
 
             var parameters = dataService.First<Parameter>(false);
@@ -79,10 +78,10 @@
 
             if (!response.IsSuccess)
             {
-                await dialogService.ShowMessage("Error", response.Message);
-
-                //
-
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    response.Message,
+                    Languages.Accept);
                 return;
             }
 
